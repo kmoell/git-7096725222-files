@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kmoell</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Новая палитра по вашему изображению */
+            --dark-bg: #2a312a; /* Темный зеленый */
+            --accent-yellow: #fcc240; /* Теплый желтый */
+            --accent-sage: #b5c5b5; /* Шалфейный зеленый */
+            
+            --card-bg: rgba(15, 17, 15, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            
+            --text-primary: #f4f4f5; 
+            --text-secondary: #a1a1aa; 
+
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Manrope', sans-serif;
+            
+            --transition-curve: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* =================== АНИМАЦИЯ "РАДИОВОЛНЫ" =================== */
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            margin: 0;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .radio-wave-container {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 100%; height: 100%;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+        }
+
+        .wave {
+            position: absolute;
+            top: 50%; left: 50%;
+            border: 2px solid;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+        }
+
+        .wave.yellow { border-color: var(--accent-yellow); }
+        .wave.sage { border-color: var(--accent-sage); }
+
+        .wave-1 { animation: radiate 4s infinite linear; width: 500px; height: 500px; }
+        .wave-2 { animation: radiate 4s infinite linear 1s; width: 700px; height: 700px; }
+        .wave-3 { animation: radiate 4s infinite linear 2s; width: 900px; height: 900px; }
+        .wave-4 { animation: radiate 4s infinite linear 3s; width: 1100px; height: 1100px; }
+
+        @keyframes radiate {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0.5; }
+            100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+        }
+
+        /* =================== ОСНОВНОЙ КОНТЕЙНЕР =================== */
+        .main-container {
+            position: relative; z-index: 2;
+            display: flex; flex-direction: column; align-items: center;
+            padding: 40px 20px; min-height: 100vh; box-sizing: border-box;
+        }
+
+        /* =================== НАВИГАЦИЯ =================== */
+        .main-nav {
+            display: flex; gap: 10px;
+            background: var(--card-bg); backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 99px; padding: 6px; margin-bottom: 30px;
+        }
+        .nav-button {
+            background-color: transparent; color: var(--text-secondary);
+            border: none; padding: 8px 18px; border-radius: 99px;
+            cursor: pointer; font-weight: 600; font-size: 0.9rem;
+            transition: all 0.3s var(--transition-curve);
+        }
+        .nav-button.active {
+            background-color: var(--accent-yellow);
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px rgba(252, 194, 64, 0.4);
+        }
+
+        /* =================== КОНТЕЙНЕР ДЛЯ ВКЛАДОК =================== */
+        .view-container {
+            width: 100%; max-width: 420px;
+            display: grid;
+        }
+        .view {
+            grid-area: 1 / 1;
+            transition: opacity 0.4s var(--transition-curve), transform 0.4s var(--transition-curve);
+        }
+        .view.hidden {
+            opacity: 0; pointer-events: none;
+            transform: translateY(10px) scale(0.98);
+        }
+
+        /* =================== КАРТОЧКА ПРОФИЛЯ =================== */
+        .profile-card {
+            background: var(--card-bg); backdrop-filter: blur(24px);
+            border: 1px solid var(--card-border); border-radius: 24px;
+            padding: 32px; text-align: center; box-shadow: 0 16px 60px rgba(0, 0, 0, 0.4);
+        }
+        .avatar {
+            width: 128px; height: 128px; border-radius: 50%;
+            border: 4px solid var(--accent-yellow);
+            margin-bottom: 20px;
+            box-shadow: 0 0 25px rgba(252, 194, 64, 0.3);
+        }
+        .nickname { font-family: var(--font-heading); font-size: 2.5rem; line-height: 1.1; font-weight: 800; margin: 0; letter-spacing: -0.05em; }
+        .realname { color: var(--text-primary); opacity: 0.9; font-size: 1.1rem; font-weight: 500; margin: 8px 0 24px 0; }
+        .social-links { display: flex; justify-content: center; gap: 16px; margin-top: 24px; }
+        .social-links a {
+            color: var(--text-secondary); background-color: rgba(30, 30, 32, 0.7);
+            border-radius: 50%; display: grid; place-items: center;
+            width: 48px; height: 48px;
+            transition: all 0.2s var(--transition-curve);
+        }
+        .social-links a:hover {
+            color: var(--dark-bg);
+            background-color: var(--accent-yellow);
+            transform: translateY(-4px);
+        }
+        .social-links svg { width: 26px; height: 26px; }
+
+        /* =================== ВКЛАДКА "МОЕ ЛИЦО" =================== */
+        .face-spoiler {
+            background: var(--card-bg); backdrop-filter: blur(24px);
+            border: 1px solid var(--card-border); border-radius: 20px;
+            padding: 20px; cursor: pointer; overflow: hidden;
+        }
+        .face-spoiler-image {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            display: block;
+            filter: blur(20px); /* Начальный блюр */
+            transition: filter 0.5s var(--transition-curve);
+        }
+        .face-spoiler.revealed .face-spoiler-image {
+            filter: blur(0px); /* Убираем блюр */
+        }
+    </style>
+</head>
+<body>
+    <div class="radio-wave-container">
+        <div class="wave wave-1 yellow"></div>
+        <div class="wave wave-2 sage"></div>
+        <div class="wave wave-3 yellow"></div>
+        <div class="wave wave-4 sage"></div>
+    </div>
+
+    <main class="main-container">
+        <nav class="main-nav">
+            <button class="nav-button active" id="nav-profile">Профиль</button>
+            <button class="nav-button" id="nav-face">мое лицо</button>
+        </nav>
+        <div class="view-container">
+            <div class="view" id="profile-view">
+                <div class="profile-card">
+                    <img src="https://raw.githubusercontent.com/kmoell/git-7096725222-files/main/6228890a5598c3ffea303829ed790cc5.png" alt="Аватар kmoell" class="avatar">
+                    <h1 class="nickname">kmoell</h1>
+                    <p class="realname">artem</p>
+                    <div class="social-links">
+                        <a href="https://kmoell.t.me" target="_blank" aria-label="Telegram" title="Telegram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.9999 1.99981C17.5227 1.99981 21.9999 6.47702 21.9999 11.9998C21.9999 17.5226 17.5227 21.9998 11.9999 21.9998C6.47708 21.9998 1.99994 17.5226 1.99994 11.9998C1.99994 6.47702 6.47708 1.99981 11.9999 1.99981ZM8.44192 10.1585L7.2034 14.8935C7.03901 15.5843 7.76988 16.0394 8.34963 15.7538L11.5168 14.1802L11.4582 14.2104L14.7749 16.5534C15.4221 16.9535 16.0752 16.6668 16.2736 15.908L18.4217 6.48834C18.673 5.49524 17.8443 5.12217 17.0959 5.41163L4.93172 10.0354C3.92138 10.3912 3.94003 10.9826 4.79257 11.242L8.03192 12.1818L15.3948 7.37126C15.8448 7.06782 16.2891 7.24182 15.9392 7.54526L9.85192 12.8718L9.9106 12.8417L8.44192 10.1585Z"></path></svg></a>
+                        <a href="https://steamcommunity.com/id/kmoell" target="_blank" aria-label="Steam" title="Steam"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.0001 1.99939C6.47725 1.99939 2.00009 6.47655 2.00009 11.9994C2.00009 17.5222 6.47725 21.9994 12.0001 21.9994C17.5229 21.9994 22.0001 17.5222 22.0001 11.9994C22.0001 6.47655 17.5229 1.99939 12.0001 1.99939ZM9.40009 15.3994L7.80009 13.7994L9.40009 12.1994L11.7001 14.4994L11.0001 17.2994L9.40009 15.3994ZM16.2441 13.1254C15.9371 13.8824 15.1761 14.3644 14.3011 14.2044C13.1111 13.9744 12.5181 12.9234 12.7501 11.7374C12.9811 10.5514 14.0321 9.9574 15.2221 10.1874C16.0381 10.3374 16.6491 10.9854 16.7361 11.7894L14.7001 11.7994C14.7001 11.1994 14.1001 10.6994 13.5001 10.6994C12.9001 10.6994 12.4001 11.1994 12.4001 11.7994C12.4001 12.3994 12.9001 12.8994 13.5001 12.8994C14.1001 12.8994 14.6001 12.3994 14.7001 11.8994L16.7361 11.9104C16.6321 12.5854 16.2441 13.1254 16.2441 13.1254Z"></path></svg></a>
+                        <a href="https://github.com/kmoell" target="_blank" aria-label="GitHub" title="GitHub"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.475 2 2 6.475 2 12C2 16.425 4.8625 20.1625 8.8375 21.4875C9.3375 21.575 9.525 21.275 9.525 21.0125C9.525 20.775 9.5125 19.9875 9.5125 19.15C7.0375 19.6125 6.35 18.5375 6.15 17.975C6.0375 17.6875 5.55 16.8 5.125 16.5625C4.775 16.375 4.275 15.9125 5.1125 15.9C5.9 15.8875 6.475 16.575 6.675 16.875C7.55 18.3125 8.9875 17.8875 9.5625 17.625C9.65 16.9875 9.9125 16.575 10.2 16.3375C7.975 16.0875 5.65 15.225 5.65 11.7125C5.65 10.5875 6.05 9.675 6.675 8.95C6.575 8.7 6.225 7.7375 6.775 6.525C6.775 6.525 7.6125 6.25 9.525 7.5625C10.325 7.35 11.1625 7.25 12 7.25C12.8375 7.25 13.675 7.35 14.475 7.5625C16.3875 6.25 17.225 6.525 17.225 6.525C17.775 7.7375 17.425 8.7 17.325 8.95C17.95 9.675 18.35 10.5875 18.35 11.7125C18.35 15.2375 16.025 16.0875 13.8 16.3375C14.1625 16.6375 14.475 17.225 14.475 18.1125C14.475 19.425 14.4625 20.575 14.4625 21.0125C14.4625 21.275 14.65 21.5875 15.1625 21.4875C19.1375 20.1625 22 16.425 22 12C22 6.475 17.525 2 12 2Z"></path></svg></a>
+                        <a href="#" aria-label="Discord" title="Discord"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317,4.37a19.792,19.792,0,0,0-4.885-1.515.074.074,0,0,0-.079.037c-.211.375-.445.865-.608,1.25a17.73,17.73,0,0,0-5.487,0c-.164-.385-.4-.875-.61-1.25a.074.074,0,0,0-.078-.037,19.736,19.736,0,0,0-4.885,1.515.069.069,0,0,0-.032.027C.533,9.045-.319,13.579.1,18.058a.082.082,0,0,0,.031.056c2.053,1.507,4.041,2.422,5.993,3.029a.078.078,0,0,0,.084-.028c.462-.63,1.224-1.994,1.224-1.994a.076.076,0,0,0-.041-.106,12.247,12.247,0,0,1-1.872-.892.077.077,0,0,1-.008-.127c.126-.094.252-.192.372-.291a.074.074,0,0,1,.078-.01,15.7,15.7,0,0,0,12.062,0,.074.074,0,0,1,.078.01c.12.099.246.198.372.291a.077.077,0,0,1-.008.127,12.247,12.247,0,0,1-1.872.892.076.076,0,0,0-.041.106s.762,1.364,1.224,1.994a.078.078,0,0,0,.084.028c1.952-.607,3.94-1.522,6-3.029a.079.079,0,0,0,.031-.056C24.319,13.579,23.467,9.045,20.349,4.4a.069.069,0,0,0-.032-.027ZM8.02,15.331c-1.183,0-2.157-1.086-2.157-2.419s.974-2.419,2.157-2.419,2.157,1.086,2.157,2.419S9.2,15.331,8.02,15.331Zm7.974,0c-1.183,0-2.157-1.086-2.157-2.419s.974-2.419,2.157-2.419,2.157,1.086,2.157,2.419S17.177,15.331,16,15.331Z"></path></svg></a>
+                    </div>
+                </div>
+            </div>
+            <div class="view hidden" id="face-view">
+                <div class="face-spoiler" id="face-spoiler-container">
+                    <!-- СЮДА ВСТАВЬТЕ ССЫЛКУ НА СВОЮ ФОТОГРАФИЮ -->
+                    <img src="https://i.ibb.co/6y40ZJ7/project2.jpg" alt="Мое лицо" class="face-spoiler-image">
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navButtons = document.querySelectorAll('.nav-button');
+            const views = document.querySelectorAll('.view');
+            const faceSpoiler = document.getElementById('face-spoiler-container');
+
+            // --- Логика переключения вкладок ---
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetViewId = button.id.replace('nav-', '') + '-view';
+                    
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    views.forEach(view => {
+                        view.classList.toggle('hidden', view.id !== targetViewId);
+                    });
+                });
+            });
+
+            // --- Логика спойлера для фото ---
+            if (faceSpoiler) {
+                faceSpoiler.addEventListener('click', () => {
+                    faceSpoiler.classList.toggle('revealed');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
