@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивная Публичная Оферта - RewHost</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Neutral Clarity -->
+    <!-- Application Structure Plan: Для преобразования юридического документа в интерактивный формат выбрана структура с двумя колонками: слева — фиксированная навигационная панель (оглавление), справа — основное текстовое содержимое. Такая архитектура является оптимальной для длинных текстовых документов, так как позволяет пользователю видеть структуру документа и быстро перемещаться между разделами, не теряя контекста. Основные интерактивные элементы включают: 1) Навигацию по клику. 2) Всплывающие подсказки для ключевых терминов, что избавляет от необходимости искать их определения. 3) Скрытые блоки с упрощенными объяснениями сложных пунктов для улучшения понимания. 4) Поиск с подсветкой текста для быстрого нахождения нужной информации. Эта структура превращает пассивное чтение в активное исследование документа. -->
+    <!-- Visualization & Content Choices: Поскольку исходный документ является текстом без количественных данных, визуализации в виде диаграмм (Chart.js/Plotly) не применялись. Вместо этого акцент сделан на интерактивности текста. Выбор методов: 1) Структура документа -> Цель: Организация -> Метод: Боковая навигация -> Взаимодействие: Плавный скролл к секциям и подсветка активного раздела -> Обоснование: Улучшает навигацию по длинному документу. 2) Юридические термины -> Цель: Информирование -> Метод: Всплывающие подсказки -> Взаимодействие: Появление при наведении -> Обоснование: Ускоряет понимание без перехода к разделу определений. 3) Сложные пункты -> Цель: Упрощение -> Метод: Скрытые блоки -> Взаимодействие: Раскрытие по клику -> Обоснование: Делает юридический язык более доступным. 4) Поиск по документу -> Цель: Исследование -> Метод: Поиск с подсветкой -> Взаимодействие: Ввод текста в поле поиска -> Обоснование: Позволяет пользователям быстро находить конкретные правила и условия. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            background-color: #f8f7f4;
+            color: #4a4a4a;
+        }
+        .active-nav {
+            color: #2563eb;
+            font-weight: 600;
+            transform: translateX(4px);
+        }
+        .nav-link {
+            transition: all 0.2s ease-in-out;
+        }
+        mark {
+            background-color: #fef08a;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <div id="app" class="container mx-auto px-4 py-8 md:px-8 md:py-12">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Публичная Оферта</h1>
+            <p class="text-gray-500 mt-2">об оказании услуг хостинга RewHost</p>
+        </header>
+
+        <div class="md:grid md:grid-cols-4 md:gap-12">
+            <aside class="md:col-span-1 mb-8 md:mb-0">
+                <div class="sticky top-8">
+                    <div class="mb-6">
+                        <input type="search" id="searchInput" placeholder="Поиск по документу..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <nav id="navigation" class="space-y-3">
+                        <h3 class="font-semibold text-gray-700 mb-2">Содержание</h3>
+                        <a href="#section-1" class="nav-link block text-gray-600 hover:text-blue-600">1. Общие положения</a>
+                        <a href="#section-2" class="nav-link block text-gray-600 hover:text-blue-600">2. Термины и определения</a>
+                        <a href="#section-3" class="nav-link block text-gray-600 hover:text-blue-600">3. Предмет Договора</a>
+                        <a href="#section-4" class="nav-link block text-gray-600 hover:text-blue-600">4. Права и обязанности</a>
+                        <a href="#section-5" class="nav-link block text-gray-600 hover:text-blue-600">5. Цена и расчеты</a>
+                        <a href="#section-6" class="nav-link block text-gray-600 hover:text-blue-600">6. Конфиденциальность</a>
+                        <a href="#section-7" class="nav-link block text-gray-600 hover:text-blue-600">7. Форс-мажор</a>
+                        <a href="#section-8" class="nav-link block text-gray-600 hover:text-blue-600">8. Ответственность</a>
+                        <a href="#section-9" class="nav-link block text-gray-600 hover:text-blue-600">9. Срок действия</a>
+                        <a href="#section-10" class="nav-link block text-gray-600 hover:text-blue-600">10. Доп. условия</a>
+                        <a href="#section-11" class="nav-link block text-gray-600 hover:text-blue-600">11. Реквизиты</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <main id="content" class="md:col-span-3 space-y-12">
+                <section id="section-1" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">1. Общие положения</h2>
+                    <p class="mb-2">1.1. В настоящей Публичной оферте содержатся условия заключения <strong data-term="Договор">Договора</strong> об оказании услуг (далее по тексту - «Договор»).</p>
+                    <p class="mb-2">1.2. Совершение указанных в настоящей Оферте действий является подтверждением согласия обеих <strong data-term="Стороны">Сторон</strong> заключить Договор на условиях, в порядке и объеме, изложенных в настоящей Оферте.</p>
+                    <p class="mb-2">1.3. Нижеизложенный текст Публичной оферты является официальным публичным предложением Исполнителя, адресованный заинтересованному кругу лиц заключить Договор об оказании услуг в соответствии с положениями пункта 2 статьи 437 Гражданского кодекса РФ.</p>
+                    <p class="mb-2">1.4. Договор об оказании услуг считается заключенным и приобретает силу с момента совершения Сторонами действий, предусмотренных в настоящей Оферте, и, означающих безоговорочное, а также полное принятие всех условий настоящей Оферты без каких-либо изъятий или ограничений на условиях присоединения.</p>
+                </section>
+
+                <section id="section-2" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">2. Термины и определения</h2>
+                    <ul class="space-y-3 list-disc pl-5">
+                        <li><strong>Договор</strong> – текст настоящей Оферты с Приложениями, являющимися неотъемлемой частью настоящей Оферты, акцептованный Заказчиком путем совершения <strong data-term="Конклюдентные действия">конклюдентных действий</strong>, предусмотренных настоящей Офертой.</li>
+                        <li><strong>Конклюдентные действия</strong> — это поведение, которое выражает согласие с предложением контрагента заключить, изменить или расторгнуть договор. Действия состоят в полном или частичном выполнении условий, которые предложил контрагент.</li>
+                        <li><strong>Сайт Исполнителя в сети «Интернет»</strong> – совокупность программ для электронных вычислительных машин и иной информации, содержащейся в информационной системе, доступ к которой обеспечивается через Telegram-бот по адресу: **http://t.me/RewHosterBot** (далее - "Бот").</li>
+                        <li><strong>Стороны Договора (Стороны)</strong> – Исполнитель и Заказчик.</li>
+                        <li><strong>Услуга</strong> – предоставление в пользование (хостинг) программного обеспечения в виде Docker-контейнеров для запуска пользовательских ботов (юзерботов), оказываемая Исполнителем Заказчику в порядке и на условиях, установленных настоящей Офертой.</li>
+                    </ul>
+                </section>
+                
+                <section id="section-3" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">3. Предмет Договора</h2>
+                    <p class="mb-2">3.1. Исполнитель обязуется оказать Заказчику <strong data-term="Услуга">Услуги</strong> по предоставлению в пользование (хостингу) программного обеспечения в виде Docker-контейнеров для запуска пользовательских ботов, а Заказчик обязуется оплатить их в размере, порядке и сроки, установленные настоящим <strong data-term="Договор">Договором</strong>.</p>
+                    <p class="mb-2">3.2. Наименование, характеристики (тарифы), количество и стоимость <strong data-term="Услуга">Услуг</strong> определяются на основании сведений, предоставляемых Исполнителем в интерфейсе Бота при оформлении заказа Заказчиком.</p>
+                    <p class="mb-2">3.3. Исполнитель оказывает <strong data-term="Услуга">Услуги</strong> по настоящему <strong data-term="Договор">Договору</strong> лично, либо с привлечением третьих лиц, при этом за действия третьих лиц Исполнитель отвечает перед Заказчиком как за свои собственные.</p>
+                    <p class="mb-2">3.4. Договор заключается путем <strong data-term="Акцепт">акцепта</strong> настоящей Оферты через совершение <strong data-term="Конклюдентные действия">конклюдентных действий</strong>, выраженных в одном из следующих:</p>
+                    <ul class="list-disc pl-8 my-2">
+                        <li>регистрация в Боте;</li>
+                        <li>оформление заказа на <strong data-term="Услуга">Услуги</strong> через интерфейс Бота;</li>
+                        <li>оплата <strong data-term="Услуга">Услуг</strong> Заказчиком.</li>
+                    </ul>
+                    <p class="mb-2">3.5. Совершение любого из действий, указанных в п. 3.4, означает полное и безоговорочное принятие Заказчиком всех условий настоящей Оферты.</p>
+                </section>
+
+                <section id="section-4" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">4. Права и обязанности Сторон</h2>
+                    <div class="mb-4">
+                        <h3 class="font-semibold text-lg mb-2">4.1. Права и обязанности Исполнителя:</h3>
+                        <p>4.1.1. Исполнитель обязуется оказать <strong data-term="Услуга">Услуги</strong> в соответствии с выбранным Заказчиком тарифом и характеристиками.</p>
+                        <p>4.1.2. Исполнитель несет ответственность за хранение и обработку персональных данных Заказчика, обеспечивает сохранение конфиденциальности этих данных и использует их исключительно для качественного оказания <strong data-term="Услуга">Услуг</strong>.</p>
+                        <p>4.1.3. Исполнитель оставляет за собой право изменять стоимость и условия оказания <strong data-term="Услуга">Услуг</strong>, а также условия настоящей Оферты в одностороннем порядке, публикуя указанные изменения в Боте. Изменения вступают в силу с момента публикации и не распространяются на уже оплаченный период <strong data-term="Услуга">Услуг</strong>.</p>
+                    </div>
+                     <div>
+                        <h3 class="font-semibold text-lg mb-2">4.2. Права и обязанности Заказчика:</h3>
+                        <p>4.2.1. Заказчик обязан предоставлять достоверную информацию о себе при регистрации в Боте и получении <strong data-term="Услуга">Услуг</strong>.</p>
+                        <p>4.2.2. Заказчик обязуется не воспроизводить, не повторять, не копировать, не продавать, а также не использовать в каких бы то ни было целях информацию и материалы, ставшие ему доступными в связи с оказанием <strong data-term="Услуга">Услуг</strong>, за исключением личного использования.</p>
+                        <p>4.2.3. Заказчик обязуется принять и оплатить <strong data-term="Услуга">Услуги</strong> в соответствии с выбранным тарифом.</p>
+                        <p>4.2.4. Заказчик вправе потребовать от Исполнителя вернуть денежные средства в случаях, предусмотренных действующим законодательством Российской Федерации и политикой возвратов, опубликованной Исполнителем.</p>
+                    </div>
+                </section>
+
+                <section id="section-5" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">5. Цена и порядок расчетов</h2>
+                    <p class="mb-2">5.1. Стоимость <strong data-term="Услуга">Услуг</strong> определяется в соответствии с тарифами, опубликованными Исполнителем в интерфейсе Бота на момент оформления заказа.</p>
+                    <p class="mb-2">5.2. Все расчеты по <strong data-term="Договор">Договору</strong> производятся в рублях Российской Федерации в безналичном порядке через платежные системы, доступные в Боте.</p>
+                    <p class="mb-2">5.3. Обязательство Заказчика по оплате считается исполненным с момента зачисления денежных средств на счет Исполнителя.</p>
+                </section>
+                
+                <section id="section-6" class="scroll-mt-24">
+                     <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">6. Конфиденциальность и безопасность</h2>
+                    <p>6.1. При реализации настоящего <strong data-term="Договор">Договора</strong> <strong data-term="Стороны">Стороны</strong> обеспечивают конфиденциальность и безопасность персональных данных в соответствии с ФЗ от 27.07.2006 г. № 152-ФЗ «О персональных данных».</p>
+                    <p>6.2. <strong data-term="Стороны">Стороны</strong> обязуются сохранять конфиденциальность информации, полученной в ходе исполнения настоящего <strong data-term="Договор">Договора</strong>.</p>
+                </section>
+
+                <section id="section-7" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">7. Форс-мажор</h2>
+                    <p class="mb-2">7.1. <strong data-term="Стороны">Стороны</strong> освобождаются от ответственности за неисполнение или ненадлежащее исполнение обязательств по <strong data-term="Договор">Договору</strong>, если надлежащее исполнение оказалось невозможным вследствие непреодолимой силы (форс-мажор), то есть чрезвычайных и непредотвратимых при данных условиях обстоятельств.</p>
+                    <p class="mb-2">7.2. В случае наступления этих обстоятельств <strong data-term="Стороны">Сторона</strong> обязана в течение 30 (тридцати) рабочих дней уведомить об этом другую <strong data-term="Стороны">Сторону</strong>.</p>
+                     <div class="mt-4">
+                        <button onclick="toggleSummary('summary-7')" class="text-sm text-blue-600 hover:underline">Показать простыми словами</button>
+                        <div id="summary-7" class="hidden mt-2 border-l-4 border-blue-200 bg-blue-50 p-4 rounded-r-md text-sm text-gray-700">
+                            Если произойдет что-то из ряда вон выходящее (стихийное бедствие, война, пандемия), что помешает нам выполнить обязательства, ни одна из сторон не будет виновата. Главное — вовремя предупредить друг друга.
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="section-8" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">8. Ответственность Сторон</h2>
+                    <p class="mb-2">8.1. В случае неисполнения или ненадлежащего исполнения своих обязательств по <strong data-term="Договор">Договору</strong>, <strong data-term="Стороны">Стороны</strong> несут ответственность в соответствии с действующим законодательством Российской Федерации.</p>
+                    <p class="mb-2">8.2. Исполнитель не несет ответственности за неисполнение обязательств, если оно произошло по вине Заказчика.</p>
+                    <p class="mb-2">8.3. <strong data-term="Стороны">Сторона</strong>, не исполнившая или ненадлежащим образом исполнившая обязательства по <strong data-term="Договор">Договору</strong>, обязана возместить другой <strong data-term="Стороны">Стороне</strong> причиненные такими нарушениями убытки в пределах, установленных законодательством.</p>
+                </section>
+                
+                <section id="section-9" class="scroll-mt-24">
+                     <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">9. Срок действия Оферты и Договора</h2>
+                     <p>9.1. Оферта вступает в силу с момента ее публикации и действует до момента отзыва Исполнителем.</p>
+                     <p>9.2. <strong data-term="Договор">Договор</strong> вступает в силу с момента <strong data-term="Акцепт">Акцепта</strong> Оферты Заказчиком и действует до полного исполнения <strong data-term="Стороны">Сторонами</strong> своих обязательств.</p>
+                     <p>9.3. Исполнитель оставляет за собой право внести изменения в условия Оферты и/или отозвать Оферту в любой момент по своему усмотрению.</p>
+                </section>
+                
+                <section id="section-10" class="scroll-mt-24">
+                     <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">10. Дополнительные условия</h2>
+                    <p>10.1. <strong data-term="Договор">Договор</strong>, его заключение и исполнение регулируется действующим законодательством Российской Федерации.</p>
+                    <p>10.2. Все споры и разногласия решаются путем переговоров. В случае невозможности урегулирования споров путем переговоров, они подлежат разрешению в судебном порядке в соответствии с законодательством РФ. Досудебный порядок урегулирования спора является обязательным.</p>
+                    <p>10.3. Языком <strong data-term="Договор">Договора</strong> и взаимодействия <strong data-term="Стороны">Сторон</strong> является русский язык.</p>
+                </section>
+
+                <section id="section-11" class="scroll-mt-24">
+                    <h2 class="text-2xl font-bold text-gray-800 border-b pb-2 mb-4">11. Реквизиты Исполнителя</h2>
+                    <div class="bg-gray-100 p-6 rounded-lg">
+                        <p><strong>Полное наименование:</strong> Индивидуальный предприниматель Чайковский Сергей Сергеевич</p>
+                        <p><strong>ИНН:</strong> 112106571293</p>
+                        <p><strong>ОГРНИП:</strong> [ВАМ НЕОБХОДИМО ВСТАВИТЬ СВОЙ НОМЕР ОГРНИП]</p>
+                        <p><strong>Контактный телефон:</strong> +7 912 183-61-97</p>
+                        <p><strong>Контактный e-mail:</strong> Kustarnikovseryj@gmail.com</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <div id="tooltip" class="hidden absolute z-10 p-2 text-sm text-white bg-gray-800 rounded-md shadow-lg max-w-xs"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const definitions = {
+                'Договор': 'Текст настоящей Оферты с Приложениями, акцептованный Заказчиком.',
+                'Конклюдентные действия': 'Поведение, которое выражает согласие с предложением контрагента (например, оплата).',
+                'Сайт Исполнителя в сети «Интернет»': 'Telegram-бот по адресу: http://t.me/RewHosterBot.',
+                'Стороны': 'Исполнитель и Заказчик вместе.',
+                'Услуга': 'Предоставление хостинга для пользовательских ботов (юзерботов).',
+                'Акцепт': 'Полное и безоговорочное принятие условий оферты.',
+            };
+
+            const contentArea = document.getElementById('content');
+            let originalContent = contentArea.innerHTML;
+
+            function initTooltips() {
+                const terms = document.querySelectorAll('strong[data-term]');
+                const tooltip = document.getElementById('tooltip');
+
+                terms.forEach(term => {
+                    term.classList.add('text-blue-700', 'cursor-pointer', 'font-semibold');
+                    term.addEventListener('mouseenter', (e) => {
+                        const termKey = e.target.getAttribute('data-term');
+                        const definition = definitions[termKey];
+                        if (definition) {
+                            tooltip.textContent = definition;
+                            tooltip.classList.remove('hidden');
+                            const rect = e.target.getBoundingClientRect();
+                            tooltip.style.left = `${rect.left + window.scrollX}px`;
+                            tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`;
+                        }
+                    });
+                    term.addEventListener('mouseleave', () => {
+                        tooltip.classList.add('hidden');
+                    });
+                });
+            }
+
+            function initNavigation() {
+                const navLinks = document.querySelectorAll('#navigation a');
+                const sections = document.querySelectorAll('main section');
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            navLinks.forEach(link => {
+                                link.classList.remove('active-nav');
+                                if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                    link.classList.add('active-nav');
+                                }
+                            });
+                        }
+                    });
+                }, { rootMargin: "-50% 0px -50% 0px" });
+
+                sections.forEach(section => observer.observe(section));
+            }
+
+            function initSearch() {
+                const searchInput = document.getElementById('searchInput');
+                searchInput.addEventListener('input', (e) => {
+                    const searchTerm = e.target.value.trim();
+                    contentArea.innerHTML = originalContent;
+                    initTooltips(); 
+
+                    if (searchTerm.length > 2) {
+                        const regex = new RegExp(searchTerm, 'gi');
+                        const newContent = contentArea.innerHTML.replace(regex, (match) => `<mark>${match}</mark>`);
+                        contentArea.innerHTML = newContent;
+                        initTooltips();
+                    }
+                });
+            }
+            
+            window.toggleSummary = function(summaryId) {
+                const summaryDiv = document.getElementById(summaryId);
+                summaryDiv.classList.toggle('hidden');
+            }
+
+            initTooltips();
+            initNavigation();
+            initSearch();
+        });
+    </script>
+</body>
+</html>
